@@ -1,1 +1,5 @@
-
+cloud:
+  aws:
+    queue:
+      url: https://sqs.ap-southeast-1.amazonaws.com/318867637310/bookInfoQueue
+      timeout: 5000

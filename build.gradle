@@ -1,11 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'org.springframework.boot' version '2.5.5'
+  id 'io.freefair.lombok' version '6.2.0'
 	id 'java'
 }
 
 group = 'com.jaxel.aws'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 
 repositories {
@@ -13,7 +14,12 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation (
+			'org.springframework.boot:spring-boot-starter',
+			'org.springframework.boot:spring-boot-starter-web',
+			"org.springframework.cloud:spring-cloud-starter-aws-messaging:$spring_cloud_version",
+			"org.springframework.cloud:spring-cloud-aws-dependencies:$spring_cloud_version"
+	)
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
