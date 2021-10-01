@@ -1,7 +1,7 @@
 package com.jaxel.aws.sqssender.controller;
 
-import com.jaxel.aws.sqssender.dto.BookInfoDTO;
-import com.jaxel.aws.sqssender.service.SQSSenderService;
+import com.jaxel.aws.sqssender.model.BookInfo;
+import com.jaxel.aws.sqssender.service.SenderService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,18 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/send")
+@RequestMapping("/sqs-sender")
 public class SQSSenderController {
 
-  private final SQSSenderService service;
+  private final SenderService service;
 
-  @PostMapping
+  @PostMapping("/send")
   @ResponseStatus(HttpStatus.CREATED)
-  public long create(@RequestBody BookInfoDTO bookInfo) {
-    return 0L;
+  public void send(@RequestBody @Valid @NotNull BookInfo bookInfo) {
+    service.send(bookInfo);
   }
 }

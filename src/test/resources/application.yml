@@ -6,7 +6,7 @@ cloud:
     stack:
       auto: false
     queue:
-      name: bookInfoQueue
+      name: testBookInfoQueue
       timeout: 10000
 logging:
   level:

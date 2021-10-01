@@ -9,5 +9,4 @@ public class SQSSenderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SQSSenderApplication.class, args);
 	}
-
 }

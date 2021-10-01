@@ -16,11 +16,16 @@ repositories {
 dependencies {
 	implementation (
 			'org.springframework.boot:spring-boot-starter',
+			'jakarta.validation:jakarta.validation-api:3.0.0',
 			'org.springframework.boot:spring-boot-starter-web',
 			"org.springframework.cloud:spring-cloud-starter-aws-messaging:$spring_cloud_version",
 			"org.springframework.cloud:spring-cloud-aws-dependencies:$spring_cloud_version"
 	)
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation (
+			'org.springframework.boot:spring-boot-starter-test',
+			"org.testcontainers:junit-jupiter:$testcontainers_version",
+			"org.testcontainers:localstack:$testcontainers_version"
+	)
 }
 
 test {

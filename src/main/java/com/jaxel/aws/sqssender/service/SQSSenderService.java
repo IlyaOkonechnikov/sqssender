@@ -3,8 +3,8 @@ package com.jaxel.aws.sqssender.service;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jaxel.aws.sqssender.dto.BookInfoDTO;
 import com.jaxel.aws.sqssender.exception.BookInfoSerializationException;
+import com.jaxel.aws.sqssender.model.BookInfo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessageChannel;
@@ -19,28 +19,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class SQSSenderService {
+public class SQSSenderService implements SenderService {
 
-  @Value("${cloud.aws.queue.url}")
-  private final String queueUrl;
+  @Value("${cloud.aws.queue.name}")
+  private String queueName;
   @Value("${cloud.aws.queue.timeout}")
-  private final long queueTimeout;
+  private long queueTimeout;
 
   private final ObjectMapper mapper;
   private final AmazonSQSAsync amazonSqs;
 
-  public boolean send(BookInfoDTO bookInfo) {
-    MessageChannel messageChannel = new QueueMessageChannel(amazonSqs, queueUrl);
-    Message<String> msg;
+  public void send(BookInfo bookInfo) {
+    MessageChannel messageChannel = new QueueMessageChannel(amazonSqs, amazonSqs.getQueueUrl(queueName).getQueueUrl());
+    String payload;
     try {
-      msg = MessageBuilder
-          .withPayload(mapper.writeValueAsString(bookInfo))
-          .build();
+      payload = mapper.writeValueAsString(bookInfo);
     } catch (JsonProcessingException e) {
       throw new BookInfoSerializationException(e);
     }
-    boolean sentStatus = messageChannel.send(msg, queueTimeout);
-    log.info("The next message has been sent: {}", msg.getPayload());
-    return sentStatus;
+    Message<String> msg = MessageBuilder
+        .withPayload(payload)
+        .build();
+    messageChannel.send(msg, queueTimeout);
+    log.info("Message sent successfully: {}", payload);
   }
 }
