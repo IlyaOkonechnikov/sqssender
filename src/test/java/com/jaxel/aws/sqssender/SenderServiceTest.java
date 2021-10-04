@@ -61,7 +61,7 @@ class SenderServiceTest {
 
   @Test
   void whenSendMessage_thenSuccess() throws JsonProcessingException {
-    Book book = new Book(1, "War and Peace", "Leo Tolstoy");
+    Book book = new Book("1", "War and Peace", "Leo Tolstoy");
     service.send(book);
     String receivedMessageBody = amazonSQS.receiveMessage(amazonSQS.getQueueUrl(QUEUE_NAME).getQueueUrl()).getMessages().get(0).getBody();
     Book receivedBook = MAPPER.readValue(receivedMessageBody, Book.class);

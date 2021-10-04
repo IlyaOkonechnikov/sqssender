@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Book {
   @NotNull
-  private int id;
+  private String id;
   @NotBlank
   private String title;
   @NotBlank
