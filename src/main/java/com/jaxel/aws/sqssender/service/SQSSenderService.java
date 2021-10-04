@@ -4,7 +4,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jaxel.aws.sqssender.exception.BookInfoSerializationException;
-import com.jaxel.aws.sqssender.model.BookInfo;
+import com.jaxel.aws.sqssender.model.Book;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessageChannel;
@@ -29,11 +29,11 @@ public class SQSSenderService implements SenderService {
   private final ObjectMapper mapper;
   private final AmazonSQSAsync amazonSqs;
 
-  public void send(BookInfo bookInfo) {
+  public void send(Book book) {
     MessageChannel messageChannel = new QueueMessageChannel(amazonSqs, amazonSqs.getQueueUrl(queueName).getQueueUrl());
     String payload;
     try {
-      payload = mapper.writeValueAsString(bookInfo);
+      payload = mapper.writeValueAsString(book);
     } catch (JsonProcessingException e) {
       throw new BookInfoSerializationException(e);
     }

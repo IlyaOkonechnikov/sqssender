@@ -1,6 +1,6 @@
 package com.jaxel.aws.sqssender.controller;
 
-import com.jaxel.aws.sqssender.model.BookInfo;
+import com.jaxel.aws.sqssender.model.Book;
 import com.jaxel.aws.sqssender.service.SenderService;
 
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class SQSSenderController {
 
   @PostMapping("/send")
   @ResponseStatus(HttpStatus.CREATED)
-  public void send(@RequestBody @Valid @NotNull BookInfo bookInfo) {
-    service.send(bookInfo);
+  public void send(@RequestBody @Valid @NotNull Book book) {
+    service.send(book);
   }
 }

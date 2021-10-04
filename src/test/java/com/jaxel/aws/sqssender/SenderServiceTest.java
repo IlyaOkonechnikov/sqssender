@@ -4,7 +4,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jaxel.aws.sqssender.model.BookInfo;
+import com.jaxel.aws.sqssender.model.Book;
 import com.jaxel.aws.sqssender.service.SenderService;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -61,10 +61,10 @@ class SenderServiceTest {
 
   @Test
   void whenSendMessage_thenSuccess() throws JsonProcessingException {
-    BookInfo bookInfo = new BookInfo(1, "War and Peace", "Leo Tolstoy");
-    service.send(bookInfo);
+    Book book = new Book(1, "War and Peace", "Leo Tolstoy");
+    service.send(book);
     String receivedMessageBody = amazonSQS.receiveMessage(amazonSQS.getQueueUrl(QUEUE_NAME).getQueueUrl()).getMessages().get(0).getBody();
-    BookInfo receivedBookInfo = MAPPER.readValue(receivedMessageBody, BookInfo.class);
-    assertEquals(receivedBookInfo, bookInfo);
+    Book receivedBook = MAPPER.readValue(receivedMessageBody, Book.class);
+    assertEquals(receivedBook, book);
   }
 }

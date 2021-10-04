@@ -1,7 +1,7 @@
 package com.jaxel.aws.sqssender.service;
 
-import com.jaxel.aws.sqssender.model.BookInfo;
+import com.jaxel.aws.sqssender.model.Book;
 
 public interface SenderService {
-  void send(BookInfo bookInfo);
+  void send(Book book);
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookInfo {
+public class Book {
   @NotNull
   private int id;
   @NotBlank
