@@ -1,7 +1,6 @@
 package com.jaxel.aws.sqssender.model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
-  @NotNull
-  private String id;
   @NotBlank
   private String title;
   @NotBlank
